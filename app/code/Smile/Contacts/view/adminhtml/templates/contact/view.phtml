@@ -1,0 +1,30 @@
+<?php /** @var $block \Smile\Contacts\Block\Adminhtml\Contact\View */
+
+use Smile\Contacts\Model\ContactMessage; ?>
+<div class="contact">
+    <div class="contact-info">
+        <div><span><?php echo __('Name') ?>: </span><?php /* @escapeNotVerified */
+            echo $block->getContact()->getData('user_name') ?></div>
+        <div><span><?php echo __('Email') ?>: </span><?php /* @escapeNotVerified */
+            echo $block->getContact()->getData('user_email') ?></div>
+        <div><span><?php echo __('Phone Number') ?>: </span><?php /* @escapeNotVerified */
+            echo $block->getContact()->getData('phone_number') ?></div>
+    </div>
+    <?php foreach ($block->getContactMessages() as $message): ?>
+        <div class="item contact-message <?php /* @escapeNotVerified */
+        echo $message->getData('type_code') ?>">
+            <div class="contact-message-head">
+                <?php /* @escapeNotVerified */
+                echo __('Customer wrote at %1:', $block->formatDateTime($message->getData('created_at'), 'M j, Y H:i:s A')) ?>
+            </div>
+            <div>
+                <?php /* @escapeNotVerified */
+                echo $message->getData('text') ?>
+            </div>
+        </div>
+    <?php endforeach ?>
+    <div>
+        <a href="mailto:<?php echo $block->getContact()->getData('user_email') ?>">Send email to the customer</a>
+    </div>
+
+</div>
